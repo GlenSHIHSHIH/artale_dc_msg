@@ -94,7 +94,7 @@ def switch_and_paste():
     win_title_safe = safe_filename(win.title).replace(" ", "")
     debug_path = f"debug.png"
     # debug position 
-    # json_path = f"result_{win_title_safe}.json"
+    json_path = f"result_{win_title_safe}.json"
     # debug position png
     # screenshot_path = f"screenshot_{win_title_safe}.png"
     # screenshot.save(screenshot_path)
@@ -139,7 +139,7 @@ def switch_and_paste():
 
     cv_img = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
     # debug position 
-    # result_data = {"window_title": win.title, "match": []}
+    result_data = {"window_title": win.title, "match": []}
     found = False
 
     # 全螢幕截圖並畫紅框
@@ -168,12 +168,12 @@ def switch_and_paste():
                 # cv2.imshow("Red Rectangle", cv_img)
 
                 # debug position 
-                # result_data["match"].append({
-                #     "keyword": keyword,
-                #     "line_text": line_text,
-                #     "relative_coords": {"x": left_, "y": top_, "w": right_ - left_, "h": bottom_ - top_},
-                #     "global_click": {"x": global_x, "y": global_y}
-                # })
+                result_data["match"].append({
+                    "keyword": keyword,
+                    "line_text": line_text,
+                    "relative_coords": {"x": left_, "y": top_, "w": right_ - left_, "h": bottom_ - top_},
+                    "global_click": {"x": global_x, "y": global_y}
+                })
 
                 # print(f"Block {key[0]}, Par {key[1]}, Line {key[2]}: {line_text}")
                 # print(f"keyword {keyword}")
@@ -191,8 +191,8 @@ def switch_and_paste():
 
     cv2.imwrite(debug_path, cv_img)
     # debug position 
-    # with open(json_path, "w", encoding="utf-8") as f:
-    #     json.dump(result_data, f, indent=2, ensure_ascii=False)
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(result_data, f, indent=2, ensure_ascii=False)
 
     cv2.imwrite(full_debug_path, full_img)
 
